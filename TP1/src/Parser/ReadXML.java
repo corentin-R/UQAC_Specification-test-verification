@@ -17,7 +17,7 @@ public class ReadXML {
 
     public static ArrayList Read(String file) {
 
-            NodeList nList = getNodeList("Log.xml");
+            NodeList nList = getNodeList(file);
 
             ArrayList listeEvents = new ArrayList();
 
@@ -73,8 +73,8 @@ public class ReadXML {
                     }
 
                 }
-                System.out.println(" "+ ((EventNode)listeEvents.get(listeEvents.size()-1)).getUser());
-                System.out.println();
+               // System.out.println(" "+ ((EventNode)listeEvents.get(listeEvents.size()-1)).getUser());
+               // System.out.println();
             }
 
         return listeEvents;
@@ -109,7 +109,7 @@ public class ReadXML {
             //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
 
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName() + "\n");
+            //System.out.println("Root element :" + doc.getDocumentElement().getNodeName() + "\n");
 
             nList = doc.getElementsByTagName("event");
 

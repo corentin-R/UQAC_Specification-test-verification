@@ -1,6 +1,6 @@
 import Events.EventNode;
 import Parser.ReadXML;
-import Questions.Question1;
+import Questions.*;
 
 import java.util.ArrayList;
 
@@ -13,9 +13,13 @@ public class Main {
 
         System.out.println("Question #"+argv[1]);
         ArrayList<EventNode>  listeEvents =  ReadXML.Read(argv[0]);
+
         switch(Integer.parseInt(argv[1])){
             case 1:
                 Question1.search(listeEvents);
+                break;
+            case 2:
+                Question2.search(listeEvents);
                 break;
         }
 

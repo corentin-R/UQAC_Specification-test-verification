@@ -31,7 +31,7 @@ public class Question1 {
             }
         }
 
-        System.out.println("Il y a "+resultat+" session(s) qui ont duré plus d'une heure");
+        System.out.println("Il y a eu "+resultat+" session(s) de plus d'une heure.");
         return resultat;
     }
 }
