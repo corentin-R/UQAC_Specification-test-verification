@@ -15,7 +15,7 @@ import Events.*;
 
 public class ReadXML {
 
-    public static void main(String argv[]) {
+    public static ArrayList Read(String file) {
 
             NodeList nList = getNodeList("Log.xml");
 
@@ -73,9 +73,11 @@ public class ReadXML {
                     }
 
                 }
-                System.out.println(" "+ ((EventNode)listeEvents.get(listeEvents.size()-1)).getTime());
+                System.out.println(" "+ ((EventNode)listeEvents.get(listeEvents.size()-1)).getUser());
                 System.out.println();
             }
+
+        return listeEvents;
     }
 
     /**

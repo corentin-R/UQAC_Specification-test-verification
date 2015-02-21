@@ -19,7 +19,7 @@ public class Login extends EventNode{
      * @param t
      * @param password
      */
-    public Login(int t, String password, String user) {
+    public Login(int t, String user, String password) {
         super(t, user);
         this.eventType = "login";
         this.password = password;
