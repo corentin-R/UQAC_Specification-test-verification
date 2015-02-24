@@ -7,7 +7,7 @@ public class Launch extends EventNode{
 
     private String application;
 
-    public Launch(int t, String application, String user) {
+    public Launch(int t, String user, String application) {
         super(t, user);
         this.application = application;
         this.eventType = "launch";

@@ -24,7 +24,7 @@ public class Question1 {
 
                         if(duree/60>60){
                             resultat++;
-                            System.out.println("user: "+user+" -> durée session: " + duree/60 +" min");
+                            System.out.println("user: "+user+" -> durée session: " + duree/60 +" minutes");
                         }
                     }
                 }

@@ -87,6 +87,16 @@
     </event>
 
     <event>
+        <time>288</time>
+        <click>
+            <application>Emacs</application>
+            <user>bibi</user>
+            <x>79</x>
+            <y>69</y>
+        </click>
+    </event>
+
+    <event>
         <time>500</time>
         <login>
             <password>incorrect</password>

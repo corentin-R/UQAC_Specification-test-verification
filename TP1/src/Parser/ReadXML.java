@@ -52,20 +52,26 @@ public class ReadXML {
                                 eElement.getElementsByTagName("password").item(0).getTextContent()));
 
                     } else if (eventType.equals("write")) {
-                        listeEvents.add(new Write(Integer.parseInt(eElement.getElementsByTagName("time").item(0).getTextContent()),
+                       Write w = new Write(Integer.parseInt(eElement.getElementsByTagName("time").item(0).getTextContent()),
                                 eElement.getElementsByTagName("user").item(0).getTextContent(),
                                 eElement.getElementsByTagName("application").item(0).getTextContent(),
-                                eElement.getElementsByTagName("name").item(0).getTextContent()));
+                                eElement.getElementsByTagName("name").item(0).getTextContent());
+                        w.setApp(eElement.getElementsByTagName("application").item(0).getTextContent());
+                        listeEvents.add(w);
                     } else if (eventType.equals("launch")) {
-                        listeEvents.add( new Launch(Integer.parseInt(eElement.getElementsByTagName("time").item(0).getTextContent()),
+                        Launch l = new Launch(Integer.parseInt(eElement.getElementsByTagName("time").item(0).getTextContent()),
                                 eElement.getElementsByTagName("user").item(0).getTextContent(),
-                                eElement.getElementsByTagName("application").item(0).getTextContent()));
+                                eElement.getElementsByTagName("application").item(0).getTextContent());
+                        l.setApp(eElement.getElementsByTagName("application").item(0).getTextContent());
+                        listeEvents.add(l);
                     } else if (eventType.equals("click")) {
-                        listeEvents.add(new Click(Integer.parseInt(eElement.getElementsByTagName("time").item(0).getTextContent()),
+                        Click c =new Click(Integer.parseInt(eElement.getElementsByTagName("time").item(0).getTextContent()),
                                 eElement.getElementsByTagName("user").item(0).getTextContent(),
                                 eElement.getElementsByTagName("application").item(0).getTextContent(),
                                 Integer.parseInt(eElement.getElementsByTagName("x").item(0).getTextContent()),
-                                Integer.parseInt(eElement.getElementsByTagName("y").item(0).getTextContent())));
+                                Integer.parseInt(eElement.getElementsByTagName("y").item(0).getTextContent()));
+                        c.setApp(eElement.getElementsByTagName("application").item(0).getTextContent());
+                        listeEvents.add(c);
                     } else { //login-success, login-failure, logout
                         listeEvents.add(new EventNode(Integer.parseInt(eElement.getElementsByTagName("time").item(0).getTextContent()),
                                 eventType,

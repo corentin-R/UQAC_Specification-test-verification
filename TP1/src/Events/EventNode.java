@@ -8,6 +8,8 @@ public class EventNode {
     protected int time;
     protected String eventType;
     protected String user;
+    protected String app = "null";
+
 
     /**
      * constructeur par défaut -> unknown event
@@ -20,6 +22,7 @@ public class EventNode {
 
     /**
      * constructeur avec eventtype
+     *
      * @param eventType
      */
     public EventNode(int t, String eventType, String user) {
@@ -30,6 +33,7 @@ public class EventNode {
 
     /**
      * juste le temps et le user
+     *
      * @param t
      */
     public EventNode(int t, String user) {
@@ -59,5 +63,13 @@ public class EventNode {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getApp() {
+        return app;
+    }
+
+    public void setApp(String app) {
+        this.app = app;
     }
 }
