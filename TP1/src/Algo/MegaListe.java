@@ -1,4 +1,4 @@
-package Questions;
+package Algo;
 
 import java.util.ArrayList;
 

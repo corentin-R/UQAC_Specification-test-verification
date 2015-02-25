@@ -87,14 +87,34 @@
     </event>
 
     <event>
-        <time>288</time>
+        <time>278</time>
         <click>
             <application>Emacs</application>
-            <user>bibi</user>
-            <x>79</x>
-            <y>69</y>
+            <user>banane</user>
+            <x>2</x>
+            <y>2</y>
         </click>
     </event>
+    <event>
+        <time>279</time>
+        <click>
+            <application>Emacs</application>
+            <user>banane</user>
+            <x>2</x>
+            <y>2</y>
+        </click>
+    </event>
+    <event>
+        <time>280</time>
+        <click>
+            <application>Emacs</application>
+            <user>banane</user>
+            <x>0</x>
+            <y>2</y>
+        </click>
+    </event>
+
+
 
     <event>
         <time>500</time>

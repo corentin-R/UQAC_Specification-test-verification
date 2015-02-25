@@ -21,7 +21,7 @@ public class Main {
         if(argv.length != 2)
             System.out.println("Paramètre à la ligne de commande invalide");
         else {
-            System.out.println("Question #"+argv[1]);
+            System.out.println("Question #"+argv[1]+"\n");
             choixQuestion(Integer.parseInt(argv[1]), ReadXML.Read(argv[0]));
         }
     }
@@ -38,7 +38,7 @@ public class Main {
                  Question3.search(listeEvents);
                 break;
             case 4:
-                // Question4.search(listeEvents);
+                 Question4.search(listeEvents);
                 break;
             case 5:
                 Question5.search(listeEvents);

@@ -12,10 +12,25 @@ import java.util.ArrayList;
  */
 public class Question2 {
 
-    public static ArrayList<String> search(ArrayList<EventNode> listeEvents){
+    public static int search(ArrayList<EventNode> listeEvents){
 
-       ArrayList<String> res = new ArrayList<String>();
+        for (EventNode e: listeEvents) {
+            if(e.getEventType().equals("Click")){
 
-        return res;
+             /*   for (EventNode e1: listeEvents){
+                    if(e1.getEventType().equals("logout") && user.equals(e1.getUser())){
+                        int duree =e1.getTime()-e.getTime();
+
+                        if(duree/60>60){
+                            resultat++;
+                            System.out.println("user: "+user+" -> durée session: " + duree/60 +" minutes");
+                        }
+                    }
+                }*/
+            }
+        }
+
+
+        return 0;
     }
 }

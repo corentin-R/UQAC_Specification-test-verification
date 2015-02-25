@@ -1,9 +1,7 @@
 package Questions;
 
-import Events.Click;
+import Algo.MegaListe;
 import Events.EventNode;
-import Events.Launch;
-import Events.Write;
 
 import java.util.ArrayList;
 
@@ -69,7 +67,6 @@ public class Question3 {
                 }
             }
         }
-
 
         System.out.println("Il y a eu " + resultat + " application(s) ayant été utilisée(s) simultanément ");
         return resultat;
