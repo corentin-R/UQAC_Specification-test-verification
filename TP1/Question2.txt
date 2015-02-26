@@ -1,0 +1,75 @@
+
+puzzle 1: Winning Number: 134-455-500
+
+using System;
+
+public class Program 
+{
+    // Can you fill the puzzle method to match the secret implementation?
+    public static int Puzzle(int i)
+    {
+        if(i%2!=0){
+          int a= i-i/2; 
+          if(i<0){
+            a+=1;
+          }
+            return a;
+        }
+        else if(i%2==0){
+          return i;
+        }
+        else{
+          return -i;
+        }
+    }
+}
+
+puzzle 2: Winning Number: 061-550-027 
+
+using System;
+
+public class Program 
+{
+    // Can you fill the puzzle method to match the secret implementation?
+    public static int Puzzle(string s)
+    {
+        if(s==null){
+          return -2;
+        }
+        else if(s.Length==0)
+          return -1;
+        else{
+          Char c= s[0];
+          if(s.Split(c).Length - 1 ==1)
+            return 1;
+          for(int j=0; j<s.Length; j++){
+            if(s[j]>c  && s.Split(c).Length - 1<=s.Split(s[j]).Length - 1){
+               c=s[j];
+            }        
+          }
+          return s.Split(c).Length - 1;
+             
+           // return '\u0035'-'A'; 
+        }
+    }    
+}
+
+puzzle 3:  Winning Number: 075-896-705 
+
+using System;
+
+public class Program {
+  public static string Puzzle(string s) {
+    // Can you write code to solve the puzzle? Ask Pex to see how close you are.
+    String sout = "";
+    int sum = 1;
+    for (int i = 0; i < s.Length; i++)
+    {
+      int letter = s[i] - 'a';
+      int out_letter = (letter + sum) % 26;
+      sout += Convert.ToChar(out_letter + 'a');
+      sum += 2;
+    }
+    return sout;
+  }
+}
