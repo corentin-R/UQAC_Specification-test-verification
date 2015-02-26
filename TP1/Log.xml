@@ -91,8 +91,8 @@
         <click>
             <application>Emacs</application>
             <user>banane</user>
-            <x>2</x>
-            <y>2</y>
+            <x>0</x>
+            <y>4</y>
         </click>
     </event>
     <event>
@@ -100,8 +100,8 @@
         <click>
             <application>Emacs</application>
             <user>banane</user>
-            <x>2</x>
-            <y>2</y>
+            <x>-2</x>
+            <y>-2</y>
         </click>
     </event>
     <event>
@@ -109,8 +109,8 @@
         <click>
             <application>Emacs</application>
             <user>banane</user>
-            <x>0</x>
-            <y>2</y>
+            <x>6</x>
+            <y>22</y>
         </click>
     </event>
 

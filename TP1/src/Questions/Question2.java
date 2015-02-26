@@ -1,6 +1,8 @@
 package Questions;
 
 import Events.EventNode;
+import Events.Open;
+import Events.Write;
 
 import java.util.ArrayList;
 
@@ -14,19 +16,18 @@ public class Question2 {
 
     public static int search(ArrayList<EventNode> listeEvents){
 
+        ArrayList<String> fichiersOuverts = new ArrayList<String>();
+
         for (EventNode e: listeEvents) {
-            if(e.getEventType().equals("Click")){
-
-             /*   for (EventNode e1: listeEvents){
-                    if(e1.getEventType().equals("logout") && user.equals(e1.getUser())){
-                        int duree =e1.getTime()-e.getTime();
-
-                        if(duree/60>60){
-                            resultat++;
-                            System.out.println("user: "+user+" -> durée session: " + duree/60 +" minutes");
-                        }
-                    }
-                }*/
+            if(e.getEventType().equals("open")){
+                fichiersOuverts.add(((Open) e).getName());
+            }else if(e.getEventType().equals("close")){
+                fichiersOuverts.remove(((Open) e).getName());
+            }
+            else if(e.getEventType().equals("write")){
+                if(!fichiersOuverts.contains(((Write)e).getName())){
+                    System.out.println("fichier: " + ((Write) e).getName()+" utilisé sans avoir été ouvert");
+                }
             }
         }
 

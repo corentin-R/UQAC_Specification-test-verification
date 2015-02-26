@@ -72,7 +72,13 @@ public class ReadXML {
                                 Integer.parseInt(eElement.getElementsByTagName("y").item(0).getTextContent()));
                         c.setApp(eElement.getElementsByTagName("application").item(0).getTextContent());
                         listeEvents.add(c);
-                    } else { //login-success, login-failure, logout
+                    }
+                    else if (eventType.equals("open")){
+                        listeEvents.add( new Open(Integer.parseInt(eElement.getElementsByTagName("time").item(0).getTextContent()),
+                                eElement.getElementsByTagName("user").item(0).getTextContent(),
+                                eElement.getElementsByTagName("name").item(0).getTextContent()));
+                    }
+                    else { //login-success, login-failure, logout
                         listeEvents.add(new EventNode(Integer.parseInt(eElement.getElementsByTagName("time").item(0).getTextContent()),
                                 eventType,
                                 eElement.getElementsByTagName("user").item(0).getTextContent()));
