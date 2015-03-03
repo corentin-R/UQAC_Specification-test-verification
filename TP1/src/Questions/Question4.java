@@ -47,7 +47,7 @@ public class Question4 {
                 }
             }
         }
-
+        System.out.println("Il y a "+nbDroites+" droites dans ce fichier");
         return 0;
     }
 

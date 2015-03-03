@@ -17,6 +17,7 @@ public class ReadXML {
 
     public static ArrayList Read(String file) {
 
+
             NodeList nList = getNodeList(file);
 
             ArrayList listeEvents = new ArrayList();
@@ -35,6 +36,7 @@ public class ReadXML {
                     // System.out.println(nNode.getChildNodes().item(3).getNodeName());
 
                     String eventType = nNode.getChildNodes().item(3).getNodeName();
+
                     if (eventType.equals("login")) {
                        /* int nbTelephonesElements = telephones.getLength();
 
@@ -73,8 +75,9 @@ public class ReadXML {
                         c.setApp(eElement.getElementsByTagName("application").item(0).getTextContent());
                         listeEvents.add(c);
                     }
-                    else if (eventType.equals("open")){
-                        listeEvents.add( new Open(Integer.parseInt(eElement.getElementsByTagName("time").item(0).getTextContent()),
+                    else if (eventType.equals("open") || eventType.equals("close")){
+                        listeEvents.add( new Open_Close(Integer.parseInt(eElement.getElementsByTagName("time").item(0).getTextContent()),
+                                eventType,
                                 eElement.getElementsByTagName("user").item(0).getTextContent(),
                                 eElement.getElementsByTagName("name").item(0).getTextContent()));
                     }
@@ -86,7 +89,7 @@ public class ReadXML {
 
                 }
                // System.out.println(" "+ ((EventNode)listeEvents.get(listeEvents.size()-1)).getUser());
-               // System.out.println();
+
             }
 
         return listeEvents;

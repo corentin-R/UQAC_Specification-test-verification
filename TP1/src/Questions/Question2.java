@@ -1,7 +1,7 @@
 package Questions;
 
 import Events.EventNode;
-import Events.Open;
+import Events.Open_Close;
 import Events.Write;
 
 import java.util.ArrayList;
@@ -19,14 +19,14 @@ public class Question2 {
         ArrayList<String> fichiersOuverts = new ArrayList<String>();
 
         for (EventNode e: listeEvents) {
-            if(e.getEventType().equals("open")){
-                fichiersOuverts.add(((Open) e).getName());
-            }else if(e.getEventType().equals("close")){
-                fichiersOuverts.remove(((Open) e).getName());
+            if(e.getEventType().equals("open")  && e instanceof Open_Close ){
+                fichiersOuverts.add(((Open_Close) e).getName());
+            }else if(e.getEventType().equals("close") && e instanceof Open_Close){
+                fichiersOuverts.remove(((Open_Close) e).getName() );
             }
-            else if(e.getEventType().equals("write")){
-                if(!fichiersOuverts.contains(((Write)e).getName())){
-                    System.out.println("fichier: " + ((Write) e).getName()+" utilisé sans avoir été ouvert");
+            else if(e.getEventType().equals("write")) {
+                if (!fichiersOuverts.contains(((Write) e).getName())) {
+                    System.out.println("fichier: " + ((Write) e).getName() + " utilisé sans avoir été ouvert, time: "+e.getTime());
                 }
             }
         }

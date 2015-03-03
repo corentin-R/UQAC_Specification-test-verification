@@ -3,14 +3,13 @@ package Events;
 /**
  * Created by coco on 25/02/15.
  */
-public class Open extends EventNode {
+public class Open_Close extends EventNode {
 
     private String name;
 
-    public Open(int t,  String user, String name) {
-        super(t, user);
+    public Open_Close(int t, String evtType, String user, String name) {
+        super(t, evtType, user);
         this.name = name;
-        this.eventType = "open";
     }
 
     public String getName() {
