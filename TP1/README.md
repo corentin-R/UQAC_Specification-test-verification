@@ -8,11 +8,15 @@ Sur le serveur du cours, dans le dossier /home/stev/TP1, se trouve un fichier lo
 
 Dans le langage de votre choix (présent sur le serveur du cours), écrivez un programme qui répond aux questions suivantes:
 
-    Y a-t-il une session qui dure plus d'une heure? (Une session étant ouverte au moyen d'un "login" et fermée au moyen d'un "logout" pour un même utilisateur.)
-    Quel est le nom des fichiers dans lesquels on a essayé d'écrire avant de les avoir ouverts (attention: un même fichier peut avoir été ouvert/fermé plusieurs fois, et par plusieurs utilisateurs)?
-    Quel est le nom de toutes les applications ayant été utilisées simultanément par au moins deux utilisateurs (i.e. ouvertes par au moins deux utilisateurs dans des sessions parallèles)?
-    Quelles sont les extrémités de chaque "ligne"? Une ligne est un patron de trois clics successifs effectués par l'utilisateur dans la même application, et dont les coordonnées x-y se situent sur une même droite.
-    Y a-t-il eu des attaques de force brute en ligne contre le système d'authentification? Pour les besoins du travail, une attaque de force brute survient lorsqu'un utilisateur échoue son login plus de trois fois dans la même minute. Pour chaque attaque, on doit retourner le nom de l'utilisateur et l'heure du premier login échoué.
+1- Y a-t-il une session qui dure plus d'une heure? (Une session étant ouverte au moyen d'un "login" et fermée au moyen d'un "logout" pour un même utilisateur.)
+
+2- Quel est le nom des fichiers dans lesquels on a essayé d'écrire avant de les avoir ouverts (attention: un même fichier peut avoir été ouvert/fermé plusieurs fois, et par plusieurs utilisateurs)?
+
+3- Quel est le nom de toutes les applications ayant été utilisées simultanément par au moins deux utilisateurs (i.e. ouvertes par au moins deux utilisateurs dans des sessions parallèles)?
+
+4- Quelles sont les extrémités de chaque "ligne"? Une ligne est un patron de trois clics successifs effectués par l'utilisateur dans la même application, et dont les coordonnées x-y se situent sur une même droite.
+
+5- Y a-t-il eu des attaques de force brute en ligne contre le système d'authentification? Pour les besoins du travail, une attaque de force brute survient lorsqu'un utilisateur échoue son login plus de trois fois dans la même minute. Pour chaque attaque, on doit retourner le nom de l'utilisateur et l'heure du premier login échoué.
 
 Le programme peut être implémenté de n'importe quelle manière, mais doit chercher à analyser le log le plus rapidement possible.
 
