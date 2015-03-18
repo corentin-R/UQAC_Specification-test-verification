@@ -1,0 +1,12 @@
+/home/stev/tp2-app.sh	-a 1	on	true	-1	true	
+/home/stev/tp2-app.sh	-a 1	off	false	1	false	
+/home/stev/tp2-app.sh	-a 2	unknown	true	-1	false	
+/home/stev/tp2-app.sh	-a 3	unknown	false	1	true	
+/home/stev/tp2-app.sh	-a 4	on	true	1	false	
+/home/stev/tp2-app.sh	-a 2	off	false	-1	true	
+/home/stev/tp2-app.sh	-a 3	on	true	-1	false	
+/home/stev/tp2-app.sh	-a 4	off	true	-1	true	
+/home/stev/tp2-app.sh	-a 1	unknown	true	-1	true	
+/home/stev/tp2-app.sh	-a 2	on	false	1	true	
+/home/stev/tp2-app.sh	-a 3	off	true	-1	true	
+/home/stev/tp2-app.sh	-a 4	unknown	false	-1	true	
