@@ -8,6 +8,7 @@
 #regénération de tests pour couverture complète?
 #toujours " -" au début de chaque ligne? (pas de tab ou rien avant "-")? et "Invalid" et "usage" 
 #paramètres de plusieurs caractères?
+#ERROR: Unrecognized option: -1 -->?
 
 #cstes
 commande="/home/stev/tp2-app.sh"
@@ -58,7 +59,7 @@ generateTests()
 	sed -i '/End/d' tests.txt
 }
 
-appelTests()
+generateExe()
 {
 	cp tests.txt testsCommande.txt
 
@@ -77,28 +78,22 @@ appelTests()
 		#sed -i 's/^\(.\{'$place'\}\)/\1'${long:0:2}'/' testsCommande.txt
 	done < listeParametres.txt
 	
-	k=1
+	k=1 #nb of line
 	while read -r line2  
 	do 
-		j=0
-		i=0
+		j=0 #nb of spaces
+		i=0 #nb of char in line
 		while  [ $i -lt ${#line2} ]
 		do
 			((i++))
 			char=${line2:$i:1}
-			echo $char	
+			#echo $char	
 			if [[ "$char" == $'\t'  ]]; then
 				((j++))						
 				line2="${line2:0:$i} ${tab[j]} ${line2:$((i+1))}"
-				echo $line2
-			
-				
-			#else
-				#echo "$char is not a hypen"
 			fi
 		done
 		sed -i "$k s/.*/${line2}/" testsCommande.txt
-		echo "---------------------"
 		((k++))
 	done < testsCommande.txt
 
@@ -107,9 +102,54 @@ appelTests()
 	# add exec path at the beginning
 	sed -i 's/^/'$commande_string'/' testsCommande.txt
 
+	removeTF
+
 	cat testsCommande.txt
 	
 }
+
+removeTF()
+{
+	#cleat temp file
+	echo "> testsCommande2.txt"
+
+	k=1 #nb of line
+	while read -r line2  
+	do 
+		i=0
+		a=( $line2 )
+		while  [ $i -lt ${#a[@]} ]
+		do			
+			((i++))
+			a=( $line2 )
+			echo ${a[i]} 
+			if [[ "${a[i]}" == "false"  ]]; then
+				#delete param before false
+				line2=$(echo $line2 | sed 's/'${a[i-1]}'//g')		
+			fi						
+		done
+		echo $line2 >> testsCommande2.txt
+		((k++))
+	done < testsCommande.txt
+
+	# rm true
+	sed -i 's/true//g' testsCommande2.txt
+	# rm false
+	sed -i 's/false//g'  testsCommande2.txt
+
+	mv testsCommande2.txt testsCommande.txt
+
+}
+
+appelTests()
+{
+	while read -r line  
+	do 
+		$line
+	done < testsCommande.txt
+}
+
+#MAIN
 
 initFiles
 
@@ -118,5 +158,7 @@ generateQICT_inputFile
 generateTests
 
 #to do: verif tests
+
+generateExe
 
 appelTests
