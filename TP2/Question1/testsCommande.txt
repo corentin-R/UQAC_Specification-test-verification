@@ -1,12 +1,12 @@
-/home/stev/tp2-app.sh	-a 1	on	true	-1	true	
-/home/stev/tp2-app.sh	-a 1	off	false	1	false	
-/home/stev/tp2-app.sh	-a 2	unknown	true	-1	false	
-/home/stev/tp2-app.sh	-a 3	unknown	false	1	true	
-/home/stev/tp2-app.sh	-a 4	on	true	1	false	
-/home/stev/tp2-app.sh	-a 2	off	false	-1	true	
-/home/stev/tp2-app.sh	-a 3	on	true	-1	false	
-/home/stev/tp2-app.sh	-a 4	off	true	-1	true	
-/home/stev/tp2-app.sh	-a 1	unknown	true	-1	true	
-/home/stev/tp2-app.sh	-a 2	on	false	1	true	
-/home/stev/tp2-app.sh	-a 3	off	true	-1	true	
-/home/stev/tp2-app.sh	-a 4	unknown	false	-1	true	
+/home/stev/tp2-app.sh -a 1 -f on -h true -j -1 -p true
+/home/stev/tp2-app.sh -a 1 -f off -h false -j 1 -p false
+/home/stev/tp2-app.sh -a 2 -f unknown -h true -j -1 -p false
+/home/stev/tp2-app.sh -a 3 -f unknown -h false -j 1 -p true
+/home/stev/tp2-app.sh -a 4 -f on -h true -j 1 -p false
+/home/stev/tp2-app.sh -a 2 -f off -h false -j -1 -p true
+/home/stev/tp2-app.sh -a 3 -f on -h true -j -1 -p false
+/home/stev/tp2-app.sh -a 4 -f off -h true -j -1 -p true
+/home/stev/tp2-app.sh -a 1 -f unknown -h true -j -1 -p true
+/home/stev/tp2-app.sh -a 2 -f on -h false -j 1 -p true
+/home/stev/tp2-app.sh -a 3 -f off -h true -j -1 -p true
+/home/stev/tp2-app.sh -a 4 -f unknown -h false -j -1 -p true
