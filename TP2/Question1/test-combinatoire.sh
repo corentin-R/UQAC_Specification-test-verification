@@ -1,14 +1,18 @@
 #!/bin/bash
 
-#TP2 Question1 -> tests combinatoires
-#Corentin RAOULT, Arnaud BOURDA, Jérémy WURTZEL
-
+echo "8INF958 - Spécification, test et vérification"
+echo "Enseignant: Sylvain Hallé"
+echo "TP2 Question1 : tests combinatoires"
+echo "Corentin RAOULT, Arnaud BOURDA, Jérémy WURTZEL"
+echo ""
+	
 #questions
 #utilisation de -h?
 #regénération de tests pour couverture complète?
 #toujours " -" au début de chaque ligne? (pas de tab ou rien avant "-")? et "Invalid" et "usage" 
 #paramètres de plusieurs caractères?
 #ERROR: Unrecognized option: -1 -->?
+#sortie des commandes à enregister dans des fichiers?
 
 #cstes
 commande="/home/stev/tp2-app.sh"
@@ -24,7 +28,7 @@ initFiles()
 
 	#remove useless lines from listeParametres
 	#keep all lines with "-" pattern
-	sed -n '/ -/p' listeParametresTemp>listeParametres.txt
+	sed -n '/^ -/p' listeParametresTemp>listeParametres.txt
 
 	#keep all invalids Combinaisons
 	sed -n '/Invalid/ { s///; :a; n; p; ba; }' file>invalidCombinaisons.txt
@@ -59,6 +63,30 @@ generateTests()
 	sed -i '/End/d' tests.txt
 }
 
+verifTests()
+{
+	#create boolean expression from invalids combinaisons
+	while read -r line
+	do
+		echo $line
+	done < invalidCombinaisons.txt
+	
+	#looking for invalid combinaisons in tests.txt
+	while read -r line  
+	do 
+		parametres=( $line )
+		#istring1=
+		false; echo "--> $?"
+		[[ ${parametres[1]} == "1" && ${parametres[4]} == "-1" ]] ; invalid1=$?
+		echo $invalid1
+		if [ $invalid1 = 0 ] ; then
+			echo "Invalid Combinaison"
+			#rm combinaison from file
+			sed -i "/$line/d"  tests.txt						
+		fi
+	done < tests.txt
+}
+
 generateExe()
 {
 	cp tests.txt testsCommande.txt
@@ -66,6 +94,7 @@ generateExe()
 	#rm num (4 first char) at the begening of each line
 	sed -i 's/^....//' testsCommande.txt
 
+	#put parameters in a array
 	i=0
 	while read -r line  
 	do 
@@ -73,8 +102,6 @@ generateExe()
 		tab[$i]=${long:0:2}
 		#echo ${tab[i]}
 		((i++)) 
-		place=$((i*1))
-		#echo $place
 		#sed -i 's/^\(.\{'$place'\}\)/\1'${long:0:2}'/' testsCommande.txt
 	done < listeParametres.txt
 	
@@ -89,7 +116,8 @@ generateExe()
 			char=${line2:$i:1}
 			#echo $char	
 			if [[ "$char" == $'\t'  ]]; then
-				((j++))						
+				((j++))		
+				#add parameter with space around				
 				line2="${line2:0:$i} ${tab[j]} ${line2:$((i+1))}"
 			fi
 		done
@@ -104,14 +132,14 @@ generateExe()
 
 	removeTF
 
-	cat testsCommande.txt
+	#cat testsCommande.txt
 	
 }
 
 removeTF()
 {
-	#cleat temp file
-	echo "> testsCommande2.txt"
+	#clear temp file
+	#> testsCommande2.txt
 
 	k=1 #nb of line
 	while read -r line2  
@@ -122,7 +150,7 @@ removeTF()
 		do			
 			((i++))
 			a=( $line2 )
-			echo ${a[i]} 
+			#echo ${a[i]} 
 			if [[ "${a[i]}" == "false"  ]]; then
 				#delete param before false
 				line2=$(echo $line2 | sed 's/'${a[i-1]}'//g')		
@@ -143,22 +171,31 @@ removeTF()
 
 appelTests()
 {
+	#call each command line in testsCommande.txt
 	while read -r line  
 	do 
+		echo "--------------------" 	
+		echo $line
 		$line
 	done < testsCommande.txt
 }
 
-#MAIN
+#-------MAIN-----------
 
+#split parameters' list and invalid combinaisons
 initFiles
 
+#take the parameters and create a file readable by QICT
 generateQICT_inputFile
 
+#use QICT and clear the file to keep just the combinaisons
 generateTests
 
 #to do: verif tests
+verifTests
 
+#take the combinaisons an create executables commands with it
 generateExe
 
-appelTests
+#call each line of testsCommande.txt
+#appelTests
