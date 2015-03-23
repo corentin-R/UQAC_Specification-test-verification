@@ -1,10 +1,8 @@
 /home/stev/tp2-app.sh -a 1 -f off  -j 1 
 /home/stev/tp2-app.sh -a 2 -f unknown -h  -j -1 
-/home/stev/tp2-app.sh -a 3 -f unknown  -j 1 -p 
 /home/stev/tp2-app.sh -a 4 -f on -h  -j 1 
 /home/stev/tp2-app.sh -a 2 -f off  -j -1 -p 
 /home/stev/tp2-app.sh -a 3 -f on -h  -j -1 
 /home/stev/tp2-app.sh -a 4 -f off -h  -j -1 -p 
 /home/stev/tp2-app.sh -a 2 -f on  -j 1 -p 
 /home/stev/tp2-app.sh -a 3 -f off -h  -j -1 -p 
-/home/stev/tp2-app.sh -a 4 -f unknown  -j -1 -p 

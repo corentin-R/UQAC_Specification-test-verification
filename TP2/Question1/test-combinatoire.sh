@@ -65,27 +65,78 @@ generateTests()
 
 verifTests()
 {
+	i=0
 	#create boolean expression from invalids combinaisons
 	while read -r line
 	do
-		echo $line
+		#echo $line
+		tabLine[$i]=$line
+		let i++
 	done < invalidCombinaisons.txt
+
+	# get length of an array
+	tLen=${#tabLine[@]}
+
+	# use for loop read all lines
+	for (( i=0; i<${tLen}; i++ ));
+	do
+		#echo  ${tabLine[$i]}
 	
-	#looking for invalid combinaisons in tests.txt
-	while read -r line  
-	do 
-		parametres=( $line )
-		#istring1=
-		false; echo "--> $?"
-		[[ ${parametres[1]} == "1" && ${parametres[4]} == "-1" ]] ; invalid1=$?
-		echo $invalid1
-		if [ $invalid1 = 0 ] ; then
-			echo "Invalid Combinaison"
-			#rm combinaison from file
-			sed -i "/$line/d"  tests.txt						
-		fi
-	done < tests.txt
+			#split string with "&"
+			while IFS='&' read -ra ADDR; do
+
+				#looking for invalid combinaisons in tests.txt
+				while read -r line  
+				do 
+					parametres=( $line )
+					nb_occurence=0
+					for  (( j=0; j<${#ADDR[@]}; j++ ));  do
+
+						a=( ${ADDR[j]} )						
+						
+						#add "= true" si nb of word == 1
+						if (( ${#a[@]} == 1)); then
+							ADDR[$j]=$(echo ${ADDR[j]} | sed  's/$/ = true /')
+							a=( ${ADDR[j]} )
+						fi
+
+						if [ "${a[0]}" != "[" ]; then
+							ADDR[$j]=$(echo ${ADDR[$j]} | awk '{print "[ "$0" ]"}')
+							ADDR[$j]=$(echo ${ADDR[$j]} | sed 's/=/==/')
+							a=( ${ADDR[j]} )	
+						fi			
+						#echo "${a[@]}"
+
+						#add brackets to value (3rd word)
+						#ADDR[$j]=$(echo ${ADDR[j]} | sed 's/\(.*\)'${a[2]}'/\1"'${a[2]}'"/')
+					
+						#echo combinaison "${ADDR[$j]}"
+						#replace parameter by tab
+						num=$(grep -n " -${a[1]}" listeParametres.txt | cut -c1-1)
+						#echo "${a[1]}" $num  "${ADDR[j]}" $line
+						res="${parametres[$num]}"
+						ADDR[$j]=$(echo ${ADDR[j]} | sed '0,/'${a[1]}'/s//'$res'/')  #sed '0,/''/s// ''/')
+	
+
+						#${ADDR[j]} ; echo "-------------------------------------> $?"
+						if ${ADDR[$j]} ; then
+							#echo "Invalid value"
+							((nb_occurence++))						
+						fi	
+						ADDR[$j]="${a[@]}"
+				done
+				if (($nb_occurence == ${#ADDR[@]})); then
+					#echo "Invalid Combinaison"
+					#rm combinaison from file
+					sed -i "/$line/d"  tests.txt	
+				fi
+			done < tests.txt	
+			
+		done <<< "${tabLine[$i]}"
+	
+	done
 }
+
 
 generateExe()
 {
@@ -198,4 +249,4 @@ verifTests
 generateExe
 
 #call each line of testsCommande.txt
-#appelTests
+appelTests
