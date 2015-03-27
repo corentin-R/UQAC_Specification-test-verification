@@ -5,7 +5,7 @@ echo "Enseignant: Sylvain Hallé"
 echo "TP2 Question1 : tests combinatoires"
 echo "Corentin RAOULT, Arnaud BOURDA, Jérémy WURTZEL"
 echo ""
-	
+
 #questions
 #utilisation de -h?
 #regénération de tests pour couverture complète?
@@ -81,19 +81,19 @@ verifTests()
 	for (( i=0; i<${tLen}; i++ ));
 	do
 		#echo  ${tabLine[$i]}
-	
+		
 			#split string with "&"
 			while IFS='&' read -ra ADDR; do
 
 				#looking for invalid combinaisons in tests.txt
 				while read -r line  
 				do 
-					parametres=( $line )
-					nb_occurence=0
-					for  (( j=0; j<${#ADDR[@]}; j++ ));  do
+				parametres=( $line )
+				nb_occurence=0
+				for  (( j=0; j<${#ADDR[@]}; j++ ));  do
 
-						a=( ${ADDR[j]} )						
-						
+					a=( ${ADDR[j]} )						
+					
 						#add "= true" si nb of word == 1
 						if (( ${#a[@]} == 1)); then
 							ADDR[$j]=$(echo ${ADDR[j]} | sed  's/$/ = true /')
@@ -109,14 +109,14 @@ verifTests()
 
 						#add brackets to value (3rd word)
 						#ADDR[$j]=$(echo ${ADDR[j]} | sed 's/\(.*\)'${a[2]}'/\1"'${a[2]}'"/')
-					
+						
 						#echo combinaison "${ADDR[$j]}"
 						#replace parameter by tab
 						num=$(grep -n " -${a[1]}" listeParametres.txt | cut -c1-1)
 						#echo "${a[1]}" $num  "${ADDR[j]}" $line
 						res="${parametres[$num]}"
 						ADDR[$j]=$(echo ${ADDR[j]} | sed '0,/'${a[1]}'/s//'$res'/')  #sed '0,/''/s// ''/')
-	
+
 
 						#${ADDR[j]} ; echo "-------------------------------------> $?"
 						if ${ADDR[$j]} ; then
@@ -124,8 +124,8 @@ verifTests()
 							((nb_occurence++))						
 						fi	
 						ADDR[$j]="${a[@]}"
-				done
-				if (($nb_occurence == ${#ADDR[@]})); then
+					done
+					if (($nb_occurence == ${#ADDR[@]})); then
 					#echo "Invalid Combinaison"
 					#rm combinaison from file
 					sed -i "/$line/d"  tests.txt	
@@ -133,7 +133,7 @@ verifTests()
 			done < tests.txt	
 			
 		done <<< "${tabLine[$i]}"
-	
+		
 	done
 }
 
@@ -149,8 +149,8 @@ generateExe()
 	i=0
 	while read -r line  
 	do 
-		long=$line
-		tab[$i]=${long:0:2}
+	long=$line
+	tab[$i]=${long:0:2}
 		#echo ${tab[i]}
 		((i++)) 
 		#sed -i 's/^\(.\{'$place'\}\)/\1'${long:0:2}'/' testsCommande.txt
@@ -195,12 +195,12 @@ removeTF()
 	k=1 #nb of line
 	while read -r line2  
 	do 
-		i=0
-		a=( $line2 )
-		while  [ $i -lt ${#a[@]} ]
-		do			
-			((i++))
-			a=( $line2 )
+	i=0
+	a=( $line2 )
+	while  [ $i -lt ${#a[@]} ]
+	do			
+	((i++))
+	a=( $line2 )
 			#echo ${a[i]} 
 			if [[ "${a[i]}" == "false"  ]]; then
 				#delete param before false
@@ -225,10 +225,10 @@ appelTests()
 	#call each command line in testsCommande.txt
 	while read -r line  
 	do 
-		echo "--------------------" 	
-		echo $line
-		$line
-	done < testsCommande.txt
+	echo "--------------------" 	
+	echo $line
+	$line
+done < testsCommande.txt
 }
 
 #-------MAIN-----------
