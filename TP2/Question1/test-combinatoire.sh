@@ -1,17 +1,17 @@
 #!/bin/bash
 
-echo "8INF958 - Spécification, test et vérification"
-echo "Enseignant: Sylvain Hallé"
+bold=`tput bold`
+normal=`tput sgr0`
+	
+echo -e ${bold}  "\e[94m"
+echo "8INF958 - Spécification, test et vérification" ${normal}
+echo -e "\e[94mEnseignant: Sylvain Hallé"
 echo "TP2 Question1 : tests combinatoires"
 echo "Corentin RAOULT, Arnaud BOURDA, Jérémy WURTZEL"
-echo ""
-
+echo ${normal}
+	
 #questions
-#utilisation de -h?
 #regénération de tests pour couverture complète?
-#toujours " -" au début de chaque ligne? (pas de tab ou rien avant "-")? et "Invalid" et "usage" 
-#paramètres de plusieurs caractères?
-#ERROR: Unrecognized option: -1 -->?
 #sortie des commandes à enregister dans des fichiers?
 
 #cstes
@@ -43,25 +43,79 @@ initFiles()
 
 generateQICT_inputFile()
 {
+	sed -i '/^ -h/d' listeParametres.txt
 	#add ":" after name of the parameter (3rd position) and create QICT test file
 	sed 's/^\(.\{3\}\)/\1:/' listeParametres.txt>qictInputFile.txt
 	#rm -h line
-	#sed -i '/-h/d' qict-file.txt
+	sed -i '/^ -h/d' qictInputFile.txt
 	#replace flag by true/false
 	sed -i 's/flag/true, false/g' qictInputFile.txt
 	#rm " -" (2 first char) at the begening of each line
 	sed -i 's/^..//' qictInputFile.txt
 }
 
+modifInvalidComb()
+{
+	i=0
+	#create boolean expression from invalids combinaisons
+	while read -r line
+	do
+		#echo $line
+		tabLine[$i]=$line
+		let i++
+	done < invalidCombinaisons.txt
+
+	# get length of an array
+	tLen=${#tabLine[@]}
+	
+	# use for loop read all lines
+	for (( i=0; i<${tLen}; i++ ));
+	do
+		#echo  ${tabLine[$i]}
+		#split string with "&"
+		
+		while IFS='&' read -ra ADDR; do
+
+			for  (( j=0; j<${#ADDR[@]}; j++ ));  do
+
+				a=( ${ADDR[j]} )						
+						
+				#add "= true" si nb of word == 1
+				if (( ${#a[@]} == 1)); then
+					ADDR[$j]=$(echo ${ADDR[j]} | sed  's/$/ = true /')
+					a=( ${ADDR[j]} )
+				fi
+
+				if((j<${#ADDR[@]} - 1)); then
+					echo -n "${a[@]}" "& " >> temp
+				else
+					echo "${a[@]}" >> temp
+				fi
+			done
+			#echo combinaison "${ADDR[@]}"		
+		done <<< "${tabLine[$i]}"
+			
+	done
+
+	mv temp invalidCombinaisons.txt
+}
+
+
 generateTests()
 {
 	#use QICT
-	qict qictInputFile.txt 1>tests.txt
+	./qict qictInputFile.txt -i invalidCombinaisons.txt 1>tests.txt
 	#rm useless lines keep all Combinaisons
 	sed -i -n '/Result test sets:/ { s///; :a; n; p; ba; }' tests.txt
 	sed -i '/^$/d' tests.txt
 	sed -i '/End/d' tests.txt
 }
+
+
+#vérifier combinaison
+#remplacer en changean 1er param
+#vérifier si ligne existe déjà dans tests.txt
+#sinon on essaye avec autre param ou autre valeur
 
 verifTests()
 {
@@ -81,19 +135,19 @@ verifTests()
 	for (( i=0; i<${tLen}; i++ ));
 	do
 		#echo  ${tabLine[$i]}
-		
+	
 			#split string with "&"
 			while IFS='&' read -ra ADDR; do
 
 				#looking for invalid combinaisons in tests.txt
 				while read -r line  
 				do 
-				parametres=( $line )
-				nb_occurence=0
-				for  (( j=0; j<${#ADDR[@]}; j++ ));  do
+					parametres=( $line )
+					nb_occurence=0
+					for  (( j=0; j<${#ADDR[@]}; j++ ));  do
 
-					a=( ${ADDR[j]} )						
-					
+						a=( ${ADDR[j]} )						
+						
 						#add "= true" si nb of word == 1
 						if (( ${#a[@]} == 1)); then
 							ADDR[$j]=$(echo ${ADDR[j]} | sed  's/$/ = true /')
@@ -109,23 +163,24 @@ verifTests()
 
 						#add brackets to value (3rd word)
 						#ADDR[$j]=$(echo ${ADDR[j]} | sed 's/\(.*\)'${a[2]}'/\1"'${a[2]}'"/')
-						
+					
 						#echo combinaison "${ADDR[$j]}"
 						#replace parameter by tab
-						num=$(grep -n " -${a[1]}" listeParametres.txt | cut -c1-1)
-						#echo "${a[1]}" $num  "${ADDR[j]}" $line
+						num=$(grep -n ^"${a[1]}" qictInputFile.txt | cut -c1-1)
+						#echo "${a[1]}" $num 
 						res="${parametres[$num]}"
 						ADDR[$j]=$(echo ${ADDR[j]} | sed '0,/'${a[1]}'/s//'$res'/')  #sed '0,/''/s// ''/')
-
+	
 
 						#${ADDR[j]} ; echo "-------------------------------------> $?"
+						#echo ${ADDR[$j]} 
 						if ${ADDR[$j]} ; then
 							#echo "Invalid value"
 							((nb_occurence++))						
 						fi	
 						ADDR[$j]="${a[@]}"
-					done
-					if (($nb_occurence == ${#ADDR[@]})); then
+				done
+				if (($nb_occurence == ${#ADDR[@]})); then
 					#echo "Invalid Combinaison"
 					#rm combinaison from file
 					sed -i "/$line/d"  tests.txt	
@@ -133,7 +188,7 @@ verifTests()
 			done < tests.txt	
 			
 		done <<< "${tabLine[$i]}"
-		
+	
 	done
 }
 
@@ -149,8 +204,8 @@ generateExe()
 	i=0
 	while read -r line  
 	do 
-	long=$line
-	tab[$i]=${long:0:2}
+		long=$line
+		tab[$i]=${long:0:2}
 		#echo ${tab[i]}
 		((i++)) 
 		#sed -i 's/^\(.\{'$place'\}\)/\1'${long:0:2}'/' testsCommande.txt
@@ -190,17 +245,17 @@ generateExe()
 removeTF()
 {
 	#clear temp file
-	#> testsCommande2.txt
+	> testsCommande2.txt
 
 	k=1 #nb of line
 	while read -r line2  
 	do 
-	i=0
-	a=( $line2 )
-	while  [ $i -lt ${#a[@]} ]
-	do			
-	((i++))
-	a=( $line2 )
+		i=0
+		a=( $line2 )
+		while  [ $i -lt ${#a[@]} ]
+		do			
+			((i++))
+			a=( $line2 )
 			#echo ${a[i]} 
 			if [[ "${a[i]}" == "false"  ]]; then
 				#delete param before false
@@ -222,16 +277,21 @@ removeTF()
 
 appelTests()
 {
+	bold=`tput bold`
+	normal=`tput sgr0`
+	
 	#call each command line in testsCommande.txt
 	while read -r line  
 	do 
-	echo "--------------------" 	
-	echo $line
-	$line
-done < testsCommande.txt
+		echo -e ${bold} "\e[92m"	
+		echo "-->" $line ${normal}
+		$line
+	done < testsCommande.txt
 }
 
 #-------MAIN-----------
+
+rm *.txt
 
 #split parameters' list and invalid combinaisons
 initFiles
@@ -239,11 +299,13 @@ initFiles
 #take the parameters and create a file readable by QICT
 generateQICT_inputFile
 
+modifInvalidComb
+
 #use QICT and clear the file to keep just the combinaisons
 generateTests
 
-#to do: verif tests
-verifTests
+#verif tests
+#verifTests
 
 #take the combinaisons an create executables commands with it
 generateExe
