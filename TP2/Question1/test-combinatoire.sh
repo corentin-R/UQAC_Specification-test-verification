@@ -284,7 +284,7 @@ appelTests()
 	while read -r line  
 	do 
 		echo -e ${bold} "\e[92m"	
-		echo "-->" $line ${normal}
+		echo $line ${normal}
 		$line
 	done < testsCommande.txt
 }
