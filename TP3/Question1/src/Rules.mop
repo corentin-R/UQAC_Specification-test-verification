@@ -1,0 +1,88 @@
+import java.io.*;
+import java.util.*;
+
+full-binding Monitoring(Bank i) {
+   event open after(Bank i) : 
+      call(* Bank.open(..)) && target(i) {} 
+
+   event close after(Bank i) : 
+      call(* Bank.close(..)) && target(i) {} 
+
+   event withBadDraw before(Bank i, int amount) : 
+      call(* Bank.withdraw(int, int)) && target(i) && args(*, amount) && condition(amount > 1000) {}
+	  
+   event withdraw before(Bank i, int amount) : 
+      call(* Bank.withdraw(int, int)) && target(i) && args(*, amount) && condition(amount <= 1000) {}	  
+
+   event isApproved  after(Bank i) returning(Object r):  
+      call(* Bank.isApproved (int, int)) && target(i) && condition(r.equals(Boolean.TRUE)){}
+	  
+   event isNotApproved  after(Bank i) returning(Object r):  
+      call(* Bank.isApproved (int, int)) && target(i) && condition(r.equals(Boolean.FALSE)){}
+	  
+
+
+   fsm :
+     start [
+        open -> safe
+		withdraw -> error1
+		withBadDraw -> error1
+		isApproved -> error1
+		isNotApproved -> error1
+     ]
+	 error1 [
+        open -> safe
+		withdraw -> error1
+		withBadDraw -> error1
+		isApproved -> error1
+		isNotApproved -> error1
+     ]
+	 
+     safe [
+        open -> error2
+        close -> start
+		withBadDraw -> error3
+		withdraw -> safe
+		isApproved -> approved
+     ]
+	 
+	 approved [
+        open -> error2
+        close -> start
+		withBadDraw -> safe
+		withdraw -> safe
+		isApproved -> approved
+     ]
+	 
+	 error2 [
+        open -> error2
+        close -> start
+		withBadDraw -> error3
+		withdraw -> safe
+		isApproved -> safe
+     ]
+	 
+	 error3 [
+        open -> error2
+        close -> start
+		withBadDraw -> error3
+		withdraw -> safe
+		isApproved -> safe
+     ]
+     
+     alias e1 = error1
+	 alias e2 = error2
+	 alias e3 = error3
+	
+	 
+   @e1 {
+      System.out.println("Les opérations isApproved et withdraw ne peuvent être effectuées que si un compte est ouvert");
+   }
+   @e2 {
+      System.out.println("On ne peut ouvrir plus d'un compte simultanément.");
+   }
+   @e3 {
+      System.out.println("Un retrait de plus de 1 000$ ne peut être effectué que si l'appel à isApproved a retourné true.");
+   }
+
+}
