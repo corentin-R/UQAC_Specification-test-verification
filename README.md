@@ -6,12 +6,16 @@ liste des différents TP effetuées durant ce cours
 
 Analyse de Logs et questions avec Pex
 
-[plus de détails](TP1/README.md)
+[détail](TP1/README.md)
 
 ## TP2
 
 Tests combinatoires et sur GUI
 
+[détail](TP2/README.md)
+
 ## TP3
 
 Runtime monitoring avec JavaMOP
+
+[détail](TP3/README.md)
